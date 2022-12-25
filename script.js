@@ -2,6 +2,9 @@
 const movieNameRef = document.getElementById("movie-name");
 const searchBtn = document.getElementById("search-btn");
 const result = document.getElementById("result");
+const backgroundRef = document.getElementById("body-container");
+// console.log(backgroundRef);
+setDefaultBackground();
 
 //Function to fetch data from API
 let getMovie = () => {
@@ -9,18 +12,20 @@ let getMovie = () => {
   let url = `http://www.omdbapi.com/?t=${movieName}&apikey=${key}`;
   //If input field is empty
   if (movieName.length <= 0) {
-    movieNameRef.placeholder='Please Enter A Movie Name';
+    movieNameRef.placeholder = "Please Enter A Movie Name";
     result.hidden = true;
   }
   //If input field is NOT empty
   else {
     result.hidden = false;
-    movieNameRef.placeholder='Enter movie name here...';
+    movieNameRef.placeholder = "Enter movie name here...";
     fetch(url)
       .then((resp) => resp.json())
       .then((data) => {
         //If movie exists in database
         if (data.Response == "True") {
+          backgroundRef.style.background = `url(${data.Poster}) no-repeat`;
+          backgroundRef.style.backgroundSize = `100vw`;
           result.innerHTML = `
             <div class="info">
                 <img src=${data.Poster} class="poster">
@@ -50,10 +55,12 @@ let getMovie = () => {
         //If movie does NOT exists in database
         else {
           result.innerHTML = `<h3 class='msg'>${data.Error}</h3>`;
+          setDefaultBackground();
         }
       })
       //If error occurs
       .catch(() => {
+        setDefaultBackground();
         result.innerHTML = `<h3 class="msg">Error Occured</h3>`;
       });
   }
@@ -62,12 +69,17 @@ searchBtn.addEventListener("click", getMovie);
 window.addEventListener("load", getMovie);
 
 // Execute a function when the user presses a key on the keyboard
-movieNameRef.addEventListener("keypress", function(event) {
-    // If the user presses the "Enter" key on the keyboard
-    if (event.key === "Enter") {
-      // Cancel the default action, if needed
-      event.preventDefault();
-      // Trigger the button element with a click
-      searchBtn.click();
-    }
-  });
+movieNameRef.addEventListener("keypress", function (event) {
+  // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    searchBtn.click();
+  }
+});
+
+//TODO: Change to Arrow function
+function setDefaultBackground() {
+  backgroundRef.style.background = `linear-gradient(#36454F 50%, #FFE5B4 50%)`;
+}
