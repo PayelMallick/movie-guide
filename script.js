@@ -1,9 +1,10 @@
 //Initial References
 const movieNameRef = document.getElementById("movie-name");
 const searchBtn = document.getElementById("search-btn");
+const downloadBtn = document.getElementById("download-btn");
 const result = document.getElementById("result");
 const backgroundRef = document.getElementById("body-container");
-// console.log(backgroundRef);
+
 setDefaultBackground();
 
 //Function to fetch data from API
@@ -49,6 +50,9 @@ let getMovie = () => {
             <p>${data.Plot}</p>
             <h3>Cast:</h3>
             <p>${data.Actors}</p>
+            <button ><a href="${
+              data.Poster
+            }" target="_blank"</a>Download Poster</button>
             
         `;
         }

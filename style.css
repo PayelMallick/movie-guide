@@ -53,6 +53,20 @@ body {
 #result {
   color: #ffffff;
 }
+#result button {
+  min-width: 20vw;
+  min-height: 4vh;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#result a {
+  text-decoration: none;
+  color: #456dda;
+  font-size: medium;
+  font-weight: 500;
+}
+
 .info {
   position: relative;
   display: grid;
